@@ -203,70 +203,70 @@ const Ethpage = () => {
     </button>
 
     {tokenSymbol === "" && (
-      <p className="text-red-400 mt-4">Find your tokens</p>
+      <p className="text-red-400 mt-4"></p>
     )}
 
     {/* SWAP UI */}
-    {tokenSymbol && (
-      <div className="mt-6 space-y-4">
-        {/* SELL TOKEN */}
-        <div className="bg-white/10 p-4 rounded-lg">
-          <div className="flex justify-between text-sm mb-2">
-            <span>From</span>
-            <div className="flex items-center space-x-2">
-              <span>Balance: {tokenBalance.toLocaleString()}</span>
-              <button
-                onClick={handleMax}
-                className="bg-gray-700 px-2 py-1 rounded text-sm"
-              >
-                Max
-              </button>
-            </div>
-          </div>
-<input
-  type="text" // changed from "number"
-  placeholder={tokenSymbol || "Token"}
-  value={sellAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-  onChange={(e) => handleSellChange(e.target.value)}
-  className="w-full bg-transparent text-2xl outline-none"
-/>
-
-          <p className="text-right text-sm mt-1">{tokenSymbol}</p>
-        </div>
-
-        {/* RECEIVE USDT */}
-        <div className="bg-white/10 p-4 rounded-lg">
-          <div className="text-sm mb-2">To</div>
-          <input
-            value={Number(usdtAmount).toLocaleString()}
-            readOnly
-            placeholder="0.0"
-            className="w-full bg-transparent text-2xl outline-none"
-          />
-          <p className="text-right text-sm mt-1">USDT</p>
-        </div>
-
-        {/* GAS INFO */}
-        <p className="text-sm">
-          Gas Fee (15%):{" "}
-          <span className={hasGas ? "text-white" : "text-red-400"}>
-            {gasFee.toFixed(6)} {chainId === 56 ? "BNB" : "ETH"}{" "}
-            {!hasGas}
-          </span>
-        </p>
-
-        {/* SELL BUTTON */}
+<div className="mt-6 space-y-4">
+  {/* SELL TOKEN */}
+  <div className="bg-white/10 p-4 rounded-lg">
+    <div className="flex justify-between text-sm mb-2">
+      <span>From</span>
+      <div className="flex items-center space-x-2">
+        <span>
+          Balance: {tokenBalance ? tokenBalance.toLocaleString() : 0}
+        </span>
         <button
-          onClick={handleSell}
-          disabled={!sellAmount || !tokenSymbol}
-          className={`w-full py-3 rounded font-semibold ${
-            hasGas ? "bg-green-600" : "bg-red-600"
-          }`}
+          onClick={handleMax}
+          className="bg-gray-700 px-2 py-1 rounded text-sm"
         >
-          {hasGas ? "Sell" : "Sell (Insufficient Gas Fee)"}
+          Max
         </button>
       </div>
-    )}
+    </div>
+    <input
+      type="text"
+      placeholder={tokenSymbol || "Token"}
+      value={sellAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      onChange={(e) => handleSellChange(e.target.value)}
+      className="w-full bg-transparent text-2xl outline-none"
+    />
+    <p className="text-right text-sm mt-1">{tokenSymbol || "Token"}</p>
+  </div>
+
+  {/* RECEIVE USDT */}
+  <div className="bg-white/10 p-4 rounded-lg">
+    <div className="text-sm mb-2">To</div>
+    <input
+      value={Number(usdtAmount).toLocaleString()}
+      readOnly
+      placeholder="0.0"
+      className="w-full bg-transparent text-2xl outline-none"
+    />
+    <p className="text-right text-sm mt-1">USDT</p>
+  </div>
+
+  {/* GAS INFO */}
+  <p className="text-sm">
+    Gas Fee (15%):{" "}
+    <span className={hasGas ? "text-white" : "text-red-400"}>
+      {gasFee.toFixed(6)} {chainId === 56 ? "BNB" : "ETH"}{" "}
+      {!hasGas}
+    </span>
+  </p>
+
+  {/* SELL BUTTON */}
+  <button
+    onClick={handleSell}
+    disabled={!sellAmount}
+    className={`w-full py-3 rounded font-semibold ${
+      hasGas ? "bg-green-600" : "bg-red-600"
+    }`}
+  >
+    {hasGas ? "Sell" : "Sell (Insufficient Gas Fee)"}
+  </button>
+</div>
+
   </div>
 
   {/* PARTNERS SECTION */}
